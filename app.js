@@ -29,42 +29,43 @@ document.addEventListener('DOMContentLoaded', () => {
         [0, width, width + 1, width + 2],
     ]
 
-    // const zShape = [
-    //     [1, 2, width + 1, width * 2 + 1],
-    //     [],
-    //     [],
-    //     [],
-    // ]
+    const zShape = [
+        [width + 1, width + 2, width * 2, width * 2 + 1],
+        [0, width, width + 1, width * 2 + 1],
+        [1, 2, width, width + 1],
+        [1, width + 1, width + 2, width * 2 + 2],
+    ]
 
-    // const tShape = [
-    //     [1, 2, width + 1, width * 2 + 1],
-    //     [],
-    //     [],
-    //     [],
-    // ]
+    const tShape = [
+        [1, width, width + 1, width + 2],
+        [1, width + 1, width + 2, width * 2 + 1],
+        [width, width + 1, width + 2, width * 2 + 1],
+        [1, width, width + 1, width * 2 + 1],
+    ]
 
-    // const oShape = [
-    //     [1, 2, width + 1, width * 2 + 1],
-    //     [],
-    //     [],
-    //     [],
-    // ]
+    const oShape = [
+        [0, 1, width, width + 1],
+        [1, 2, width + 1, width + 2],
+        [width + 1, width + 2, width * 2 + 1, width * 2 + 2],
+        [width, width + 1, width * 2, width * 2 + 1],
+    ]
 
-    // const iShape = [
-    //     [1, 2, width + 1, width * 2 + 1],
-    //     [],
-    //     [],
-    //     [],
-    // ]
+    const iShape = [
+        [1, width + 1, width * 2 + 1, width * 3 + 1],
+        [width, width + 1, width + 2, width + 3],
+        [2, width + 2, width * 2 + 2, width * 3 + 2],
+        [width * 2, width * 2 + 1, width * 2 + 2, width * 2 + 3],
+    ]
 
 
-    const shapes = [lShape]
+    const shapes = [lShape, zShape, tShape, oShape, iShape]
 
-    // current board position start **includes the 9 total squares
-    let currentPosition = 3
-    let current = shapes[0][0]
+    // creates a random instance between the shapes that exist in the array
     let randomShape = Math.floor(Math.random() * shapes.length)
     console.log(randomShape)
+    // current board position start **includes the 9 total squares
+    let currentPosition = 3
+    let current = shapes[randomShape][0]
 
     // draw the first shape's rotational location
     function draw() {
