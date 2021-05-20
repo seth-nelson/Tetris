@@ -1,5 +1,8 @@
 body {
-    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
 }
 
 .grid {
@@ -7,11 +10,10 @@ body {
     flex-wrap: wrap;
     width: 200px;
     height: 400px;
-    background-color: grey;
+    background-color: lightgrey;
 }
 
-.grid div {
-    width: 18px;
-    height: 18px;
-    border: 1px solid black;
+.shape {
+    background-color: purple;
+    opacity: 0.5;
 }
