@@ -1,0 +1,19 @@
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+}
+
+.grid {
+    display: flex;
+    flex-wrap: wrap;
+    width: 200px;
+    height: 400px;
+    background-color: lightgrey;
+}
+
+.shape {
+    background-color: purple;
+    opacity: 0.5;
+}
