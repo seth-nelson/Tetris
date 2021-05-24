@@ -12,17 +12,19 @@ function addDivs() {
     }
 }
 
-// function addDivsForSpace() {
-//     for (var i = 0; i < 10; i++) {
-//         var div = document.createElement('div');
+function addDivsForSpace() {
+    for (var i = 0; i < 10; i++) {
+        var div = document.createElement('div');
 
-//     div.style.width = '18px';
-//     div.style.height = '18px';
-//     div.style.opacity = '0.75';
-//     div.style.border = '1px solid black';
-//     div.className = 'taken';
-//     }
-// }
+    div.style.width = '18px';
+    div.style.height = '18px';
+    // div.style.opacity = '0.75';
+    // div.style.border = '1px solid black';
+    div.classList.add('taken');
+
+    document.querySelector('.grid').appendChild(div);
+    }
+}
 
 
 // this logic takes all of the divs in the model and creates an array with assigned indexes
@@ -102,12 +104,19 @@ document.addEventListener('DOMContentLoaded', () => {
         undraw()
         currentPosition += width
         draw()
+        freezeShape()
     }
 
     // Checks to see if the current div's are in a square that has the classname of taken. if so, it changes the classname to taken. if not, it continues to move down.
     function freezeShape() {
         if(current.some(index => squares[currentPosition + index + width].classList.contains('taken'))) {
             current.forEach(index => squares[currentPosition + index].classList.add('taken'))
+
+            // make a new shape at the top
+            random = Math.floor(Math.random() * shapes.length);
+            current = shapes[random][currentRotation]
+            currentPosition = 4
+            draw()
         }
     }
 
