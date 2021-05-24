@@ -12,6 +12,18 @@ function addDivs() {
     }
 }
 
+// function addDivsForSpace() {
+//     for (var i = 0; i < 10; i++) {
+//         var div = document.createElement('div');
+
+//     div.style.width = '18px';
+//     div.style.height = '18px';
+//     div.style.opacity = '0.75';
+//     div.style.border = '1px solid black';
+//     div.className = 'taken';
+//     }
+// }
+
 
 // this logic takes all of the divs in the model and creates an array with assigned indexes
 document.addEventListener('DOMContentLoaded', () => {
@@ -62,7 +74,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // creates a random instance between the shapes that exist in the array
     let randomShape = Math.floor(Math.random() * shapes.length)
-    console.log(randomShape)
+    // console.log(randomShape)
+
+    let currentRotation = 0
     // current board position start **includes the 9 total squares
     let currentPosition = 3
     let current = shapes[randomShape][0]
@@ -74,5 +88,28 @@ document.addEventListener('DOMContentLoaded', () => {
         })
     }
 
-    draw()
+    // removes the shape from the screen
+    function undraw() {
+        current.forEach(index => {
+            squares[currentPosition + index].classList.remove('shape')
+        })
+    }
+
+    timerId = setInterval(moveDown, 1000)
+
+    // moves the shape down every specified interval
+    function moveDown() {
+        undraw()
+        currentPosition += width
+        draw()
+    }
+
+    // Checks to see if the current div's are in a square that has the classname of taken. if so, it changes the classname to taken. if not, it continues to move down.
+    function freezeShape() {
+        if(current.some(index => squares[currentPosition + index + width].classList.contains('taken'))) {
+            current.forEach(index => squares[currentPosition + index].classList.add('taken'))
+        }
+    }
+
+
 })
