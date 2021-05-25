@@ -28,10 +28,11 @@ function miniGrid() {
 
         div.style.width = '18px';
         div.style.height = '18px';
-        document.querySelector('.miniGrid').appendChild(div);
+        document.querySelector('.mini-grid').appendChild(div);
     }
 }
 
+// -----------------------------------------------------------------------------------------------------------
 
 // this logic takes all of the divs in the model and creates an array with assigned indexes
 document.addEventListener('DOMContentLoaded', () => {
@@ -39,13 +40,15 @@ document.addEventListener('DOMContentLoaded', () => {
     // .from method allows you to make an array from elements
     let squares = Array.from(document.querySelectorAll('.grid div'))
     // width of the grid used for transitions
+    const startButton = document.querySelector('.start-button')
+    const scoreDisplay = document.querySelector('.score')
     const width = 10
-    console.log(squares)
+    let timerId
 
     const lShape = [
         [1, 2, width + 1, width * 2 + 1],
-        [width, width + 1, width + 2],
-        [1, width + 1, width * 2 + 1],
+        [width, width + 1, width + 2, width * 2 + 2],
+        [1, width + 1, width * 2, width * 2 + 1],
         [0, width, width + 1, width + 2],
     ]
 
@@ -182,7 +185,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     // show the next shape to get applied to the grid on a mini grid
-    const displaySquares = document.querySelectorAll('.miniGrid div')
+    const displaySquares = document.querySelectorAll('.mini-grid div')
     const displayWidth = 4
     let displayIndex = 0
 
@@ -204,4 +207,18 @@ document.addEventListener('DOMContentLoaded', () => {
             displaySquares[displayIndex + index].classList.add('shape')
         })
     }
+
+
+    // add button functionality for start and stop of the interval
+    startButton.addEventListener('click', () => {
+        if (timerId) {
+            clearInterval(timerId)
+            timerId = null
+        } else {
+            draw()
+            timerId = setInterval(moveDown, 1000)
+            nextRandom = Math.floor(Math.random() * shapes.length)
+            displayShape()
+        }
+    })
 })

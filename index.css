@@ -23,7 +23,7 @@ body {
     opacity: 0.5;
 }
 
-.miniGrid {
+.mini-grid {
     display: flex;
     flex-wrap: wrap;
     background-color: gray;
