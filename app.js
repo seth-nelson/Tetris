@@ -28,6 +28,7 @@ function miniGrid() {
 
         div.style.width = '18px';
         div.style.height = '18px';
+        div.style.border = '1px solid black';
         document.querySelector('.mini-grid').appendChild(div);
     }
 }
@@ -36,14 +37,15 @@ function miniGrid() {
 
 // this logic takes all of the divs in the model and creates an array with assigned indexes
 document.addEventListener('DOMContentLoaded', () => {
-    const grid = document.querySelector('grid')
+    const grid = document.querySelector('.grid')
     // .from method allows you to make an array from elements
     let squares = Array.from(document.querySelectorAll('.grid div'))
     // width of the grid used for transitions
     const startButton = document.querySelector('.start-button')
-    const scoreDisplay = document.querySelector('.score')
+    const scoreDisplay = document.querySelector('#score')
     const width = 10
     let timerId
+    let score = 0
 
     const lShape = [
         [1, 2, width + 1, width * 2 + 1],
@@ -92,12 +94,14 @@ document.addEventListener('DOMContentLoaded', () => {
     let currentRotation = 0
     let current = shapes[randomShape][currentRotation]
 
+
     // draw the first shape's rotational location
     function draw() {
         current.forEach(index => {
             squares[currentPosition + index].classList.add('shape')
         })
     }
+
 
     // removes the shape from the screen
     function undraw() {
@@ -106,8 +110,9 @@ document.addEventListener('DOMContentLoaded', () => {
         })
     }
 
+
     // function for shape moving down the board
-    timerId = setInterval(moveDown, 1000)
+    // timerId = setInterval(moveDown, 1000)
 
     // function for keyCode shape transitions
     function control(e) {
@@ -124,6 +129,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.addEventListener('keydown', control)
 
+
     // moves the shape down one interval every event trigger
     function moveDown() {
         undraw()
@@ -131,6 +137,7 @@ document.addEventListener('DOMContentLoaded', () => {
         draw()
         freezeShape()
     }
+
 
     // moves the shape left one interval every event trigger unless it hits the wall
     function moveLeft() {
@@ -144,6 +151,7 @@ document.addEventListener('DOMContentLoaded', () => {
         draw()
     }
 
+
     // moves the shape right one interval every event trigger unless it hits the wall
     function moveRight() {
         undraw()
@@ -155,6 +163,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         draw()
     }
+
 
     // rotates the shape to the next available configuration
     function rotate() {
@@ -168,6 +177,7 @@ document.addEventListener('DOMContentLoaded', () => {
         draw()
     }
 
+
     // Checks to see if the current div's are in a square that has the classname of taken. if so, it changes the classname to taken. if not, it continues to move down.
     function freezeShape() {
         if(current.some(index => squares[currentPosition + index + width].classList.contains('taken'))) {
@@ -180,6 +190,8 @@ document.addEventListener('DOMContentLoaded', () => {
             currentPosition = 4
             draw()
             displayShape()
+            addScore()
+            gameOver()
         }
     }
 
@@ -197,6 +209,7 @@ document.addEventListener('DOMContentLoaded', () => {
         [0, 1, displayWidth, displayWidth + 1], // oShape
         [1, displayWidth + 1, displayWidth * 2 + 1, displayWidth * 3 + 1] // iShape
     ]
+
 
     // display the shape in the mini square
     function displayShape() {
@@ -221,4 +234,33 @@ document.addEventListener('DOMContentLoaded', () => {
             displayShape()
         }
     })
+
+
+    // add the score and delete the completed row
+    function addScore() {
+        for (let i = 0; i < 199; i += width) {
+            const row = [i, i+1, i+2, i+3, i+4, i+5, i+6, i+7, i+8, i+9]
+
+            if (row.every(index => squares[index].classList.contains('taken'))) {
+                score += 10
+                scoreDisplay.innerHTML = score
+                row.forEach(index => {
+                    squares[index].classList.remove('taken')
+                    squares[index].classList.remove('shape')
+                })
+                const squaresRemoved = squares.splice(i, width)
+                squares = squaresRemoved.concat(squares)
+                squares.forEach(cell => grid.appendChild(cell))
+            }
+        }
+    }
+
+
+    // function to stop the game
+    function gameOver() {
+        if (current.some(index => squares[currentPosition + index].classList.contains('taken'))) {
+            scoreDisplay.innerHTML = 'Game Over'
+            clearInterval(timerId)
+        }
+    }
 })
