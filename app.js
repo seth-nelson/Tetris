@@ -3,12 +3,11 @@ function addDivs() {
     for (var i = 0; i < 200; i++) {
         var div = document.createElement('div');
 
-    div.style.width = '18px';
-    div.style.height = '18px';
-    div.style.opacity = '0.75';
-    div.style.border = '1px solid black';
-
-    document.querySelector('.grid').appendChild(div);
+        div.style.width = '18px';
+        div.style.height = '18px';
+        div.style.opacity = '0.75';
+        div.style.border = '1px solid black';
+        document.querySelector('.grid').appendChild(div);
     }
 }
 
@@ -16,13 +15,20 @@ function addDivsForSpace() {
     for (var i = 0; i < 10; i++) {
         var div = document.createElement('div');
 
-    div.style.width = '18px';
-    div.style.height = '18px';
-    // div.style.opacity = '0.75';
-    // div.style.border = '1px solid black';
-    div.classList.add('taken');
+        div.style.width = '18px';
+        div.style.height = '18px';
+        div.classList.add('taken');
+        document.querySelector('.grid').appendChild(div);
+    }
+}
 
-    document.querySelector('.grid').appendChild(div);
+function miniGrid() {
+    for (var i = 0; i < 16; i++) {
+        var div = document.createElement('div');
+
+        div.style.width = '18px';
+        div.style.height = '18px';
+        document.querySelector('.grid').appendChild(div);
     }
 }
 
@@ -76,12 +82,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // creates a random instance between the shapes that exist in the array
     let randomShape = Math.floor(Math.random() * shapes.length)
-    // console.log(randomShape)
 
-    let currentRotation = 0
     // current board position start **includes the 9 total squares
-    let currentPosition = 3
-    let current = shapes[randomShape][0]
+    let currentPosition = 4
+    let currentRotation = 0
+    let current = shapes[randomShape][currentRotation]
 
     // draw the first shape's rotational location
     function draw() {
@@ -97,14 +102,66 @@ document.addEventListener('DOMContentLoaded', () => {
         })
     }
 
+    // function for shape moving down the board
     timerId = setInterval(moveDown, 1000)
 
-    // moves the shape down every specified interval
+    // function for xxxxxxxx
+    function control(e) {
+        if(e.keyCode === 37) {
+            moveLeft()
+        } else if (e.keycode === 38) {
+            rotate()
+        } else if (e.keyCode === 39) {
+            moveRight()
+        } else if (e.keycode === 40) {
+            moveDown()
+        } 
+    }
+
+    document.addEventListener('keydown', control)
+
+    // moves the shape down one interval every event trigger
     function moveDown() {
         undraw()
         currentPosition += width
         draw()
         freezeShape()
+    }
+
+    // moves the shape left one interval every event trigger unless it hits the wall
+    function moveLeft() {
+        undraw()
+
+        const isAtLeftEdge = current.some(index => (currentPosition + index) % width === 0)
+        if(!isAtLeftEdge) currentPosition -= 1
+        if(current.some(index => squares[currentPosition + index].classList.contains('taken'))) {
+            currentPosition += 1
+        }
+        draw()
+    }
+
+    // moves the shape right one interval every event trigger unless it hits the wall
+    function moveRight() {
+        undraw()
+
+        const isAtRightEdge = current.some(index => (currentPosition + index) % width === width - 1)
+        if(!isAtRightEdge) currentPosition += 1
+        if(current.some(index => squares[currentPosition + index].classList.contains('taken'))) {
+            currentPosition -= 1
+        }
+        draw()
+    }
+
+    // rotates the shape to the next available configuration
+    function rotate() {
+        undraw()
+
+        currentRotation ++
+        if(currentRotation === current.length) { // if the current rotation gets to 4, go back to 0
+            currentRotation = 0
+        }
+        current = shapes[random][currentRotation]
+        draw()
     }
 
     // Checks to see if the current div's are in a square that has the classname of taken. if so, it changes the classname to taken. if not, it continues to move down.
@@ -119,6 +176,14 @@ document.addEventListener('DOMContentLoaded', () => {
             draw()
         }
     }
+
+
+    // show the next shape to get applied to the grid on a mini grid
+    const displaySquares = document.querySelectorAll('.miniGrid div')
+    const displayWidth = 4
+    let displayIndex = 0
+
+    //shapes without rotations
 
 
 })
