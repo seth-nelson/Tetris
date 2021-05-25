@@ -28,7 +28,7 @@ function miniGrid() {
 
         div.style.width = '18px';
         div.style.height = '18px';
-        document.querySelector('.grid').appendChild(div);
+        document.querySelector('.miniGrid').appendChild(div);
     }
 }
 
@@ -82,6 +82,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // creates a random instance between the shapes that exist in the array
     let randomShape = Math.floor(Math.random() * shapes.length)
+    let nextRandom = 0
 
     // current board position start **includes the 9 total squares
     let currentPosition = 4
@@ -105,15 +106,15 @@ document.addEventListener('DOMContentLoaded', () => {
     // function for shape moving down the board
     timerId = setInterval(moveDown, 1000)
 
-    // function for xxxxxxxx
+    // function for keyCode shape transitions
     function control(e) {
         if(e.keyCode === 37) {
             moveLeft()
-        } else if (e.keycode === 38) {
+        } else if (e.keyCode === 38) {
             rotate()
         } else if (e.keyCode === 39) {
             moveRight()
-        } else if (e.keycode === 40) {
+        } else if (e.keyCode === 40) {
             moveDown()
         } 
     }
@@ -160,7 +161,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if(currentRotation === current.length) { // if the current rotation gets to 4, go back to 0
             currentRotation = 0
         }
-        current = shapes[random][currentRotation]
+        current = shapes[randomShape][currentRotation]
         draw()
     }
 
@@ -170,10 +171,12 @@ document.addEventListener('DOMContentLoaded', () => {
             current.forEach(index => squares[currentPosition + index].classList.add('taken'))
 
             // make a new shape at the top
-            random = Math.floor(Math.random() * shapes.length);
-            current = shapes[random][currentRotation]
+            randomShape = nextRandom
+            nextRandom = Math.floor(Math.random() * shapes.length);
+            current = shapes[randomShape][currentRotation]
             currentPosition = 4
             draw()
+            displayShape()
         }
     }
 
@@ -183,7 +186,22 @@ document.addEventListener('DOMContentLoaded', () => {
     const displayWidth = 4
     let displayIndex = 0
 
-    //shapes without rotations
+    // all first rotations of shapes in one array
+    const upNextShapes = [
+        [1, 2, displayWidth + 1, displayWidth * 2 + 1], // lShape
+        [displayWidth + 1, displayWidth + 2, displayWidth * 2, displayWidth * 2 + 1], // zShape 
+        [1, displayWidth, displayWidth + 1, displayWidth + 2], // tShape
+        [0, 1, displayWidth, displayWidth + 1], // oShape
+        [1, displayWidth + 1, displayWidth * 2 + 1, displayWidth * 3 + 1] // iShape
+    ]
 
-
+    // display the shape in the mini square
+    function displayShape() {
+        displaySquares.forEach(square => {
+            square.classList.remove('shape')
+        })
+        upNextShapes[nextRandom].forEach(index => {
+            displaySquares[displayIndex + index].classList.add('shape')
+        })
+    }
 })
