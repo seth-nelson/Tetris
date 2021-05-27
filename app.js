@@ -3,10 +3,12 @@ function addDivs() {
     for (var i = 0; i < 200; i++) {
         var div = document.createElement('div');
 
-        div.style.width = '18px';
-        div.style.height = '18px';
-        div.style.opacity = '0.75';
-        div.style.border = '1px solid black';
+        div.style.width = '20px';
+        div.style.height = '20px';
+        div.style.opacity = '0.85';
+        div.style.borderRadius = '2.5px';
+        div.style.boxShadow = '0 2px 2px 0 rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.19)'
+        
         document.querySelector('.grid').appendChild(div);
     }
 }
@@ -15,9 +17,10 @@ function addDivsForSpace() {
     for (var i = 0; i < 10; i++) {
         var div = document.createElement('div');
 
-        div.style.width = '18px';
-        div.style.height = '18px';
+        div.style.width = '20px';
+        div.style.height = '20px';
         div.classList.add('taken');
+
         document.querySelector('.grid').appendChild(div);
     }
 }
@@ -26,9 +29,10 @@ function miniGrid() {
     for (var i = 0; i < 16; i++) {
         var div = document.createElement('div');
 
-        div.style.width = '18px';
-        div.style.height = '18px';
-        div.style.border = '1px solid black';
+        div.style.width = '20px';
+        div.style.height = '20px';
+        div.style.boxShadow = '0 2px 2px 0 rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.19)'
+
         document.querySelector('.mini-grid').appendChild(div);
     }
 }
@@ -46,6 +50,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const width = 10
     let timerId
     let score = 0
+    const colors = [
+        'indianred',
+        'crimson',
+        'mediumseagreen',
+        'mediumpurple',
+        'cornflowerblue',
+        'goldenrod'
+    ]
 
     const lShape = [
         [1, 2, width + 1, width * 2 + 1],
@@ -99,6 +111,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function draw() {
         current.forEach(index => {
             squares[currentPosition + index].classList.add('shape')
+            squares[currentPosition + index].style.backgroundColor = colors[randomShape]
         })
     }
 
@@ -107,6 +120,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function undraw() {
         current.forEach(index => {
             squares[currentPosition + index].classList.remove('shape')
+            squares[currentPosition + index].style.backgroundColor = ''
         })
     }
 
@@ -215,9 +229,11 @@ document.addEventListener('DOMContentLoaded', () => {
     function displayShape() {
         displaySquares.forEach(square => {
             square.classList.remove('shape')
+            square.style.backgroundColor = ''
         })
         upNextShapes[nextRandom].forEach(index => {
             displaySquares[displayIndex + index].classList.add('shape')
+            displaySquares[displayIndex + index].style.backgroundColor = colors[nextRandom]
         })
     }
 
@@ -247,6 +263,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 row.forEach(index => {
                     squares[index].classList.remove('taken')
                     squares[index].classList.remove('shape')
+                    squares[index].style.backgroundColor = ''
                 })
                 const squaresRemoved = squares.splice(i, width)
                 squares = squaresRemoved.concat(squares)

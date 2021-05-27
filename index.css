@@ -64,9 +64,11 @@ h3 {
 button {
     display: inline-block;
     border: none;
-    padding: 1rem 2rem;
+    padding: 10px;
     margin: 10px;
+    width: 120px;
     text-decoration: none;
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.19);
     background: teal;
     color: #ffffff;
     font-family: 'Quicksand', sans-serif;
@@ -98,8 +100,16 @@ button:active {
 .container {
     display: flex;
     flex-direction: column;
+    align-content: center;
     width: 300px;
     margin: 0 auto;
+    padding-top: 40px;
+}
+
+.button-container {
+    display: flex;
+    align-items: center;
+    margin: 10px;
 }
 
 .grid {
@@ -107,13 +117,19 @@ button:active {
     flex-wrap: wrap;
     width: 200px;
     height: 400px;
-    background-color: lightgrey;
+    background-color: gainsboro;
     margin: 20px 0px 20px 0px;
 }
 
+.grid-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px;
+}
+
 .shape {
-    background-color: rgb(153, 10, 153);
-    opacity: 0.5;
+    background-color: rebeccapurple;
 }
 
 .mini-grid {
