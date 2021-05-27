@@ -112,8 +112,7 @@ button:active {
 }
 
 .shape {
-    background-color: rgb(153, 10, 153);
-    opacity: 0.5;
+    background-color: rebeccapurple;
 }
 
 .mini-grid {

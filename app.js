@@ -46,6 +46,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const width = 10
     let timerId
     let score = 0
+    const colors = [
+        'indianred',
+        'crimson',
+        'mediumseagreen',
+        'mediumpurple',
+        'cornflowerblue',
+        'goldenrod'
+    ]
 
     const lShape = [
         [1, 2, width + 1, width * 2 + 1],
@@ -99,6 +107,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function draw() {
         current.forEach(index => {
             squares[currentPosition + index].classList.add('shape')
+            squares[currentPosition + index].style.backgroundColor = colors[randomShape]
         })
     }
 
@@ -107,6 +116,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function undraw() {
         current.forEach(index => {
             squares[currentPosition + index].classList.remove('shape')
+            squares[currentPosition + index].style.backgroundColor = ''
         })
     }
 
@@ -215,9 +225,11 @@ document.addEventListener('DOMContentLoaded', () => {
     function displayShape() {
         displaySquares.forEach(square => {
             square.classList.remove('shape')
+            square.style.backgroundColor = ''
         })
         upNextShapes[nextRandom].forEach(index => {
             displaySquares[displayIndex + index].classList.add('shape')
+            displaySquares[displayIndex + index].style.backgroundColor = colors[nextRandom]
         })
     }
 
@@ -247,6 +259,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 row.forEach(index => {
                     squares[index].classList.remove('taken')
                     squares[index].classList.remove('shape')
+                    squares[index].style.backgroundColor = ''
                 })
                 const squaresRemoved = squares.splice(i, width)
                 squares = squaresRemoved.concat(squares)
