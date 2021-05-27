@@ -12,18 +12,23 @@
 
         <div class='container'>
             <h2>Tetris</h2>
-            <button class='start-button'>Start/Pause</button>
-            <h3>Score: <span id="score">0</span></h3>
-            <div class='mini-grid'>
-                <script>
-                    miniGrid()
-                </script>
+            <div class='button-container'>
+                <button class='start-button'>Start/Pause</button>
+                <button onCLick='location.reload()'='reset-button'>Reset</button>
             </div>
-            <div class='grid'>
-                <script>
-                    addDivs()
-                    addDivsForSpace()
-                </script>
+            <h3>Score: <span id="score">0</span></h3>
+            <div class='grid-container'>
+                <div class='mini-grid'>
+                    <script>
+                        miniGrid()
+                    </script>
+                </div>
+                <div class='grid'>
+                    <script>
+                        addDivs()
+                        addDivsForSpace()
+                    </script>
+                </div>
             </div>
         </div>
 

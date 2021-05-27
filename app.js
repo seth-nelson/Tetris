@@ -3,10 +3,12 @@ function addDivs() {
     for (var i = 0; i < 200; i++) {
         var div = document.createElement('div');
 
-        div.style.width = '18px';
-        div.style.height = '18px';
-        div.style.opacity = '0.75';
-        div.style.border = '1px solid black';
+        div.style.width = '20px';
+        div.style.height = '20px';
+        div.style.opacity = '0.85';
+        div.style.borderRadius = '2.5px';
+        div.style.boxShadow = '0 2px 2px 0 rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.19)'
+        
         document.querySelector('.grid').appendChild(div);
     }
 }
@@ -15,9 +17,10 @@ function addDivsForSpace() {
     for (var i = 0; i < 10; i++) {
         var div = document.createElement('div');
 
-        div.style.width = '18px';
-        div.style.height = '18px';
+        div.style.width = '20px';
+        div.style.height = '20px';
         div.classList.add('taken');
+
         document.querySelector('.grid').appendChild(div);
     }
 }
@@ -26,9 +29,10 @@ function miniGrid() {
     for (var i = 0; i < 16; i++) {
         var div = document.createElement('div');
 
-        div.style.width = '18px';
-        div.style.height = '18px';
-        div.style.border = '1px solid black';
+        div.style.width = '20px';
+        div.style.height = '20px';
+        div.style.boxShadow = '0 2px 2px 0 rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.19)'
+
         document.querySelector('.mini-grid').appendChild(div);
     }
 }
